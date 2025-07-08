@@ -5,6 +5,7 @@ import requests
 import hashlib
 from datetime import datetime
 import os
+import asyncio
 
 class LoginWindow:
     def __init__(self, page, main_app):
@@ -281,6 +282,7 @@ class TikTokReporterApp:
                 headers=headers,
                 report_count=int(self.report_count.value),
                 delay_seconds=int(self.delay_seconds.value)
+            )  # كان هناك قوس مفقود هنا
             
             self.show_snackbar("All reports completed!")
         except json.JSONDecodeError:
@@ -345,5 +347,4 @@ async def main(page: ft.Page):
     app = TikTokReporterApp(page)
 
 if __name__ == "__main__":
-    import asyncio
     ft.app(target=main)
