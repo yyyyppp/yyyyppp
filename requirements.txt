@@ -1,5 +1,4 @@
 flet
 requests
 datetime
-os
 asyncio
