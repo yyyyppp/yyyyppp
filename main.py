@@ -7,62 +7,14 @@ from datetime import datetime
 import os
 import asyncio
 
-class LoginWindow:
-    def __init__(self, page, main_app):
-        self.page = page
-        self.main_app = main_app
-        self.page.title = "Login"
-        self.page.window_width = 750
-        self.page.window_height = 900
-        self.page.window_resizable = True
-        
-        self.correct_hash = "1feefc00fb990dcad97df713a2e08a461605cf9218d5c529247365619f58246c"
-        
-        self.setup_ui()
-    
-    def setup_ui(self):
-        self.key_entry = ft.TextField(
-            label="Enter Secret Key:",
-            password=True,
-            can_reveal_password=True,
-            width=300
-        )
-        
-        self.login_btn = ft.ElevatedButton(
-            text="Login",
-            on_click=self.check_login,
-            width=150
-        )
-        
-        self.page.add(
-            ft.Column(
-                [
-                    self.key_entry,
-                    self.login_btn
-                ],
-                alignment=ft.MainAxisAlignment.CENTER,
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                spacing=20
-            )
-        )
-    
-    def check_login(self, e):
-        entered_key = self.key_entry.value
-        hashed_key = hashlib.sha256(entered_key.encode()).hexdigest()
-        
-        if hashed_key == self.correct_hash:
-            self.page.window_close()
-            self.main_app.show_main_window()
-        else:
-            self.key_entry.value = ""
-            self.page.snack_bar = ft.SnackBar(ft.Text("Incorrect key!"))
-            self.page.snack_bar.open = True
-            self.page.update()
-
 class TikTokReporterApp:
     def __init__(self, page):
         self.page = page
-        self.login_window = LoginWindow(page, self)
+        self.page.title = "TikTok User Reporter"
+        self.page.window_width = 1024
+        self.page.window_height = 768
+        self.page.window_resizable = True
+        self.page.window_center()
         
         # Report reasons
         self.report_reasons = {
@@ -82,13 +34,6 @@ class TikTokReporterApp:
         }
         
         self.report_counter = 0
-    
-    def show_main_window(self):
-        self.page.title = "TikTok User Reporter"
-        self.page.window_width = 1024
-        self.page.window_height = 768
-        self.page.window_center()
-        self.page.clean()
         self.setup_ui()
     
     def setup_ui(self):
@@ -282,7 +227,7 @@ class TikTokReporterApp:
                 headers=headers,
                 report_count=int(self.report_count.value),
                 delay_seconds=int(self.delay_seconds.value)
-            )  # كان هناك قوس مفقود هنا
+            )
             
             self.show_snackbar("All reports completed!")
         except json.JSONDecodeError:
