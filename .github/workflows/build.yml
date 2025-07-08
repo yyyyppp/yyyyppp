@@ -1,4 +1,4 @@
-name: All Builds (#Linux,IPA, #macOS, Windows, Android, IPA, APK, AAB)
+name: All Builds (Linux, macOS, Windows, Android, IPA, APK, AAB)
 
 on:
   # Runs on push to any of the below branches
@@ -244,4 +244,4 @@ jobs:
         name: ipa-build-artifact
         path: build/ipa
         if-no-files-found: warn
-        overwrite: Fals
+        overwrite: FALSE
